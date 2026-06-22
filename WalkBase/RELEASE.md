@@ -33,25 +33,48 @@ Upload that to the Play Console. (Recommended: enroll in Play App Signing.)
 Walking is the product; the town is the motivator. Lead the listing with step tracking, then the
 cosy reward loop. (Category can be changed later if needed — see §9.)
 
-**Title (≤30 chars):** `Walk Track — Step Tracker` *(include a keyword like "Step Tracker"/"Pedometer" for discovery)*
-**Short description (≤80):** Private step tracker that grows a cosy town as you walk. Offline, no account.
+**Title:** `Walk Track`
+*(The title has no keyword, so the short/full description and the Play keyword fields carry discovery —
+lead with "step tracker", "step counter", "pedometer", "walking".)*
+
+**Short description (≤80, this is 76):** Private step tracker that grows a cosy town as you walk — offline, no account.
+
 **Full description:**
-> Walk Track is a private step tracker that makes walking fun. It counts your daily steps in the background and turns them into a cosy little town that grows the more you walk — a gentle nudge to move more, with no pressure and no data harvesting.
+> Walk Track is a private step tracker that makes walking fun. It counts your daily steps in the background and turns them into a cosy little town that grows the more you walk — a gentle, no-pressure nudge to move more, with no accounts and no data harvesting.
 >
-> Track your walking:
-> • Daily steps, distance and calories — counted on-device, even when the app is closed
-> • Daily step goals, streaks and milestones to keep you moving
+> Walking is the point. The town is your reward.
+>
+> 🚶 TRACK YOUR WALKING
+> • Counts your daily steps automatically, even when the app is closed
+> • See your walking distance and estimated calories at a glance
+> • Set a daily step goal and build streaks to stay consistent
 > • A clear day-by-day history and simple activity insights
-> • Gentle reminders: near-goal, streak-at-risk and time-for-a-walk nudges
+> • Gentle reminders — near your goal, when a streak's at risk, or just time for a walk
 >
-> Stay motivated:
-> • Every 10 steps earns a Brick — spend Bricks to build and grow your own little town
-> • Houses, farms, markets, gardens and more, in a living world with day/night skies, seasons, weather and townsfolk
-> • Back up your town to a file you control, or share a snapshot of it
+> 🏘️ GROW YOUR TOWN
+> • Every 10 steps earns a Brick — spend Bricks to place and upgrade buildings
+> • Houses, farms, markets, gardens, a chapel, a fountain and more
+> • A living world: day and night skies, four seasons, weather, festivals, townsfolk and pets
+> • Watch your town come alive as your step count climbs
 >
-> 100% private: no account, no cloud, no location, no ads, no tracking. The app has no internet permission, so your steps and data never leave your phone.
+> 🔒 PRIVATE BY DESIGN
+> Walk Track has no internet access at all, so your data physically cannot leave your phone.
+> • No account, no sign-up
+> • No cloud, no servers
+> • No location or GPS
+> • No ads, no analytics, no tracking
+> Your steps, your town and your stats stay on your device. Back them up to a file you control, or delete everything just by uninstalling.
 >
-> Health & safety: Walk Track is a fun step-tracking app, not a medical or fitness-advice tool. Step counts and estimates may be inaccurate and aren't intended to diagnose, treat or prevent any condition. Your activity choices are your own responsibility — consult a healthcare professional before changing your exercise habits, and stay aware of your surroundings while walking.
+> 📤 MAKE IT YOURS
+> • Name your town
+> • Share a snapshot of your town and walking stats whenever you like
+> • Light on battery and storage; works completely offline
+>
+> Whether you want a simple step counter, a friendly pedometer, or just a reason to take a few more steps each day, Walk Track turns your walking into something to look forward to.
+>
+> Health & safety: Walk Track is a fun step-tracking app, not a medical or fitness-advice tool. Step counts, distance and calories are estimates from your phone's sensor and may be inaccurate, and aren't intended to diagnose, treat or prevent any condition. Decisions about your activity are your own responsibility — consider talking to a qualified healthcare professional before starting or changing an exercise routine, and stay aware of your surroundings while you walk.
+>
+> Requires a device with a step-counter sensor.
 
 ## 3. Privacy policy URL (required)
 
