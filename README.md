@@ -2,9 +2,9 @@
 
 # 🧱 Walk Track
 
-### Turn your everyday steps into a cosy little town.
+### A private step tracker that turns your walking into a cosy little town.
 
-*A privacy-first, offline walking game built with .NET MAUI. Walk → earn Bricks → build and grow a charming isometric town — with no account, no cloud, and no tracking.*
+*A privacy-first, offline **step tracker** built with .NET MAUI — wrapped in a gentle town-building game that motivates you to move. Walking is the product; the town is the reward. No account, no cloud, no tracking.*
 
 </div>
 

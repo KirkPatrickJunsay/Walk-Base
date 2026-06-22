@@ -29,20 +29,29 @@ Upload that to the Play Console. (Recommended: enroll in Play App Signing.)
 
 ## 2. Store listing copy
 
-**Title:** Walk Track — Build a Town by Walking
-**Short description (≤80):** Turn your daily steps into a cosy little town. Private, offline, no account.
+**Positioning:** publish as an **App** (not a Game). **Category: Health & Fitness.**
+Walking is the product; the town is the motivator. Lead the listing with step tracking, then the
+cosy reward loop. (Category can be changed later if needed — see §9.)
+
+**Title (≤30 chars):** `Walk Track — Step Tracker` *(include a keyword like "Step Tracker"/"Pedometer" for discovery)*
+**Short description (≤80):** Private step tracker that grows a cosy town as you walk. Offline, no account.
 **Full description:**
-> Walk Track turns every step you take into Bricks — and you spend Bricks to build and grow a charming isometric town. Place houses, farms, markets and gardens, watch townsfolk move in, and keep your streak alive to earn bonus rewards.
+> Walk Track is a private step tracker that makes walking fun. It counts your daily steps in the background and turns them into a cosy little town that grows the more you walk — a gentle nudge to move more, with no pressure and no data harvesting.
 >
-> • Walk → earn Bricks (counted even in the background)
-> • Build, upgrade, move and sell buildings on your own town
-> • A living world: day/night skies, seasons, weather, festivals, townsfolk & pets
-> • Goals, milestones and daily streaks
-> • 100% private: no account, no cloud, no location, no ads, no tracking — everything stays on your phone
+> Track your walking:
+> • Daily steps, distance and calories — counted on-device, even when the app is closed
+> • Daily step goals, streaks and milestones to keep you moving
+> • A clear day-by-day history and simple activity insights
+> • Gentle reminders: near-goal, streak-at-risk and time-for-a-walk nudges
 >
-> Just walk, and watch your town come to life.
+> Stay motivated:
+> • Every 10 steps earns a Brick — spend Bricks to build and grow your own little town
+> • Houses, farms, markets, gardens and more, in a living world with day/night skies, seasons, weather and townsfolk
+> • Back up your town to a file you control, or share a snapshot of it
 >
-> Health & safety: Walk Track is a step-tracking game, not a medical or fitness-advice tool. Step counts and estimates may be inaccurate and aren't intended to diagnose, treat or prevent any condition. Your activity choices are your own responsibility — consult a healthcare professional before changing your exercise habits, and stay aware of your surroundings while walking.
+> 100% private: no account, no cloud, no location, no ads, no tracking. The app has no internet permission, so your steps and data never leave your phone.
+>
+> Health & safety: Walk Track is a fun step-tracking app, not a medical or fitness-advice tool. Step counts and estimates may be inaccurate and aren't intended to diagnose, treat or prevent any condition. Your activity choices are your own responsibility — consult a healthcare professional before changing your exercise habits, and stay aware of your surroundings while walking.
 
 ## 3. Privacy policy URL (required)
 
