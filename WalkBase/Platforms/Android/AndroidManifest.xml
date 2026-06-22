@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+	<!--
+		Privacy (spec §3): NO INTERNET, NO ACCESS_NETWORK_STATE, NO location.
+		The ONLY runtime permission is ACTIVITY_RECOGNITION, required by the
+		step-counter sensor on Android 10+ (API 29+).
+	-->
+	<uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+
+	<!-- Background step tracking (foreground service) + its persistent notification.
+	     Still NO internet / location. -->
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE_HEALTH" />
+	<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+	<uses-permission android:name="android.permission.VIBRATE" />
+
+	<!-- Step-counter hardware declared optional so the app still installs on
+	     devices without it; we degrade gracefully to a "no sensor" screen. -->
+	<uses-feature android:name="android.hardware.sensor.stepcounter" android:required="false" />
+
+	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true" />
+</manifest>

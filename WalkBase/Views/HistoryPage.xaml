@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WalkBase.Views.HistoryPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:WalkBase.ViewModels"
+    x:DataType="vm:HistoryViewModel"
+    Title="History"
+    BackgroundColor="{StaticResource WbBg}">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Summary header -->
+        <Border Grid.Row="0" Style="{StaticResource WbCard}" Margin="12,12,12,6" Padding="14"
+                IsVisible="{Binding HasDays}">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                <Label Grid.Column="0" Text="📅" FontSize="24" VerticalOptions="Center" />
+                <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                    <Label Text="WALK HISTORY" Style="{StaticResource WbSection}" FontSize="10" />
+                    <Label Text="{Binding Summary}" FontSize="14" TextColor="{StaticResource WbText}" />
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+
+        <!-- Day list -->
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Days}" Margin="12,2,12,12">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:DailyHistoryItem">
+                    <Border Style="{StaticResource WbCard}" Margin="0,6" Padding="14">
+                        <VerticalStackLayout Spacing="10">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                <Label Grid.Column="0" Text="{Binding GoalIcon}" FontSize="20" VerticalOptions="Center" />
+                                <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                                    <Label Text="{Binding DateLabel}" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource WbText}" />
+                                    <Label Text="{Binding DistanceText}" FontSize="12" TextColor="{StaticResource WbTextDim}" />
+                                </VerticalStackLayout>
+                                <Label Grid.Column="2" Text="{Binding StepsText}" FontSize="20" FontAttributes="Bold"
+                                       TextColor="{StaticResource WbGreen}" VerticalOptions="Center" />
+                            </Grid>
+                            <Border BackgroundColor="{StaticResource WbSurface2}" Stroke="Transparent" StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 4" HeightRequest="8" Padding="0">
+                                <ProgressBar Progress="{Binding GoalProgress}" ProgressColor="{StaticResource WbGreen}" HeightRequest="8" />
+                            </Border>
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Empty state -->
+        <VerticalStackLayout Grid.Row="1" IsVisible="{Binding IsEmpty}" Spacing="10"
+                             VerticalOptions="Center" HorizontalOptions="Center" Padding="32">
+            <Label Text="🚶" FontSize="48" HorizontalOptions="Center" />
+            <Label Text="No walks logged yet" FontSize="18" FontAttributes="Bold"
+                   TextColor="{StaticResource WbText}" HorizontalTextAlignment="Center" />
+            <Label Text="Take a walk with your phone and your daily totals will show up here."
+                   FontSize="14" TextColor="{StaticResource WbTextDim}" HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WalkBase.Views.PrivacyPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Privacy"
+    BackgroundColor="{StaticResource WbBg}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="14">
+
+            <Border Style="{StaticResource WbCard}" Padding="20">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="🔒" FontSize="40" HorizontalOptions="Center" />
+                    <Label Text="Private by design" FontSize="22" FontAttributes="Bold"
+                           TextColor="{StaticResource WbText}" HorizontalTextAlignment="Center" />
+                    <Label Text="Walk Track keeps everything on your phone. There is no account, no cloud, and no tracking."
+                           FontSize="14" TextColor="{StaticResource WbTextDim}" HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource WbCard}">
+                <VerticalStackLayout Spacing="14">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="📵 No network" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource WbText}" />
+                        <Label Text="The app never connects to the internet. It has no INTERNET permission, no analytics, and no ads." FontSize="13" TextColor="{StaticResource WbTextDim}" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="📍 No location" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource WbText}" />
+                        <Label Text="Walk Track never uses GPS or your location. Steps come only from your phone's motion sensor." FontSize="13" TextColor="{StaticResource WbTextDim}" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="👣 Only one permission" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource WbText}" />
+                        <Label Text="Physical activity (ACTIVITY_RECOGNITION) lets the app read your step count. That's the only data it uses." FontSize="13" TextColor="{StaticResource WbTextDim}" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="💾 Your data stays with you" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource WbText}" />
+                        <Label Text="Steps, your town and your height/weight are stored only in this app on this device. Your height and weight are used only to estimate distance and calories. Use Settings → Data to back them up to a file you control." FontSize="13" TextColor="{StaticResource WbTextDim}" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="🗑️ Delete anytime" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource WbText}" />
+                        <Label Text="Uninstalling the app removes all of its data. Nothing is kept anywhere else." FontSize="13" TextColor="{StaticResource WbTextDim}" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

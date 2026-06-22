@@ -1,0 +1,107 @@
+# ---------------------------------------------------------------------------
+# .gitignore — .NET MAUI (WalkBase / Walk Track)
+# Patterns have no leading slash, so they match at any depth — this single file
+# covers the app project and the sibling WalkBase.Tests project alike.
+# ---------------------------------------------------------------------------
+
+## Build output
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+artifacts/
+[Pp]ublish/
+*.binlog
+
+## .NET / NuGet
+project.lock.json
+project.fragment.lock.json
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+.nuget/
+*.nuget.props
+*.nuget.targets
+
+## Test results & coverage
+[Tt]est[Rr]esult*/
+*.trx
+*.coverage
+*.coveragexml
+coverage*.json
+coverage*.xml
+coverage*.info
+
+## Visual Studio
+.vs/
+*.user
+*.suo
+*.userprefs
+*.userosscache
+*.sln.docstates
+*.VC.db
+*.VC.VC.opendb
+
+## Rider / JetBrains
+.idea/
+*.sln.iml
+
+## VS Code (keep shared config, ignore personal/local)
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/tasks.json
+
+# ---------------------------------------------------------------------------
+# Android
+# ---------------------------------------------------------------------------
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+local.properties
+
+## Signing — NEVER commit keystores, certs, or their passwords (see RELEASE.md)
+*.keystore
+*.jks
+*.p12
+*.pfx
+keystore.properties
+signing.properties
+
+# ---------------------------------------------------------------------------
+# iOS / Mac Catalyst
+# ---------------------------------------------------------------------------
+*.ipa
+*.dSYM/
+*.dSYM.zip
+DerivedData/
+xcuserdata/
+
+## Provisioning & certificates — NEVER commit
+*.mobileprovision
+*.provisionprofile
+*.cer
+*.certSigningRequest
+
+# ---------------------------------------------------------------------------
+# OS & editor cruft
+# ---------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ---------------------------------------------------------------------------
+# Secrets / local config (never commit credentials)
+# ---------------------------------------------------------------------------
+*.env
+.env.*
+secrets.json
+appsettings.*.local.json

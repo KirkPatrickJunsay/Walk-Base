@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WalkBase.Views.InsightsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
+    xmlns:vm="clr-namespace:WalkBase.ViewModels"
+    x:DataType="vm:InsightsViewModel"
+    Title="Insights"
+    BackgroundColor="{StaticResource WbBg}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="12" Spacing="12">
+
+            <!-- Summary stat cards -->
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="12">
+                <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource WbCard}">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="THIS WEEK" Style="{StaticResource WbSection}" FontSize="10" />
+                        <Label Text="{Binding WeekTotalText}" Style="{StaticResource WbStatValue}" TextColor="{StaticResource WbGreen}" />
+                        <Label Text="steps" FontSize="11" TextColor="{StaticResource WbTextDim}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource WbCard}">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="DAILY AVG (7d)" Style="{StaticResource WbSection}" FontSize="10" />
+                        <Label Text="{Binding DailyAvgText}" Style="{StaticResource WbStatValue}" />
+                        <Label Text="steps" FontSize="11" TextColor="{StaticResource WbTextDim}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource WbCard}">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="BEST DAY (14d)" Style="{StaticResource WbSection}" FontSize="10" />
+                        <Label Text="{Binding BestDayText}" Style="{StaticResource WbStatValue}" />
+                        <Label Text="steps" FontSize="11" TextColor="{StaticResource WbTextDim}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource WbCard}">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="GOAL HIT" Style="{StaticResource WbSection}" FontSize="10" />
+                        <Label Text="{Binding GoalHitText}" Style="{StaticResource WbStatValue}" TextColor="{StaticResource WbAmber}" />
+                        <Label Text="days this week" FontSize="11" TextColor="{StaticResource WbTextDim}" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- Steps chart -->
+            <Label Text="STEPS — LAST 14 DAYS" Style="{StaticResource WbSection}" Margin="4,4,0,0" />
+            <Border Style="{StaticResource WbCard}" Padding="8">
+                <Grid>
+                    <skia:SKCanvasView x:Name="Chart" HeightRequest="190" />
+                    <Label Text="No steps in the last 14 days." IsVisible="{Binding IsEmpty}"
+                           FontSize="13" TextColor="{StaticResource WbTextDim}"
+                           HorizontalOptions="Center" VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <!-- Calories -->
+            <Label Text="CALORIES" Style="{StaticResource WbSection}" Margin="4,4,0,0" />
+            <Border Style="{StaticResource WbCard}">
+                <Grid>
+                    <Grid ColumnDefinitions="Auto,*" IsVisible="{Binding HasMetrics}">
+                        <Label Grid.Column="0" Text="🔥" FontSize="28" VerticalOptions="Center" Margin="0,0,14,0" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                            <Label Text="Burned this week (est.)" FontSize="13" TextColor="{StaticResource WbTextDim}" />
+                            <HorizontalStackLayout Spacing="6">
+                                <Label Text="{Binding CaloriesText}" Style="{StaticResource WbStatValue}" TextColor="{StaticResource WbAmber}" />
+                                <Label Text="kcal" FontSize="14" TextColor="{StaticResource WbTextDim}" VerticalOptions="End" Margin="0,0,0,5" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <VerticalStackLayout Spacing="10" IsVisible="{Binding NeedsMetrics}">
+                        <Label Text="Add your height and weight to estimate calories burned."
+                               FontSize="14" TextColor="{StaticResource WbText}" />
+                        <Button Text="Open Settings" Style="{StaticResource WbPrimaryButton}"
+                                Command="{Binding OpenSettingsCommand}" HorizontalOptions="Start" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <!-- Lifetime stats (moved off the tab bar) -->
+            <Border Style="{StaticResource WbCard}" Margin="0,4,0,0">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenStatsCommand}" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                    <Label Grid.Column="0" Text="📊" FontSize="24" VerticalOptions="Center" />
+                    <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                        <Label Text="Lifetime stats" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource WbText}" />
+                        <Label Text="Totals, Bricks &amp; buildings" FontSize="12" TextColor="{StaticResource WbTextDim}" />
+                    </VerticalStackLayout>
+                    <Label Grid.Column="2" Text="›" FontSize="24" TextColor="{StaticResource WbTextDim}" VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <!-- Achievements -->
+            <Border Style="{StaticResource WbCard}" Margin="0,4,0,0">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenProfileCommand}" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                    <Label Grid.Column="0" Text="🏆" FontSize="24" VerticalOptions="Center" />
+                    <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                        <Label Text="Achievements" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource WbText}" />
+                        <Label Text="Badges you've earned" FontSize="12" TextColor="{StaticResource WbTextDim}" />
+                    </VerticalStackLayout>
+                    <Label Grid.Column="2" Text="›" FontSize="24" TextColor="{StaticResource WbTextDim}" VerticalOptions="Center" />
+                </Grid>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

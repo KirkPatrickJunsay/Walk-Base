@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="456" height="456" viewBox="0 0 456 456" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <!-- WalkBase mark: an isometric brick building on a grassy foundation.
+       Art kept within the central safe zone for adaptive-icon masking. -->
+
+  <!-- Foundation diamond (grass base) -->
+  <polygon points="228,283 353,325 228,367 103,325" fill="#4E7D5C" />
+  <polygon points="228,367 103,325 103,341 228,383" fill="#33543E" />
+  <polygon points="228,367 353,325 353,341 228,383" fill="#2B4836" />
+
+  <!-- Building roof (top face) -->
+  <polygon points="228,125 323,173 228,221 133,173" fill="#F0BE6A" />
+  <polygon points="228,125 323,173 228,173 133,173" fill="#F7CE85" />
+
+  <!-- Left wall (brick) -->
+  <polygon points="133,173 228,221 228,331 133,283" fill="#C9603B" />
+  <!-- Right wall (brick, darker) -->
+  <polygon points="323,173 228,221 228,331 323,283" fill="#A84B2E" />
+
+  <!-- Brick courses: left wall -->
+  <g stroke="#9B4A2C" stroke-width="3" opacity="0.55">
+    <line x1="133" y1="210" x2="228" y2="258" />
+    <line x1="133" y1="247" x2="228" y2="295" />
+  </g>
+  <!-- Brick courses: right wall -->
+  <g stroke="#823A22" stroke-width="3" opacity="0.55">
+    <line x1="323" y1="210" x2="228" y2="258" />
+    <line x1="323" y1="247" x2="228" y2="295" />
+  </g>
+  <!-- vertical brick joins -->
+  <line x1="180" y1="197" x2="180" y2="307" stroke="#9B4A2C" stroke-width="3" opacity="0.4" />
+  <line x1="276" y1="197" x2="276" y2="307" stroke="#823A22" stroke-width="3" opacity="0.4" />
+
+  <!-- Door -->
+  <polygon points="210,289 228,298 228,331 210,322" fill="#5B2C1A" />
+
+  <!-- Brick currency chip, hinting at the reward -->
+  <g transform="translate(300,120)">
+    <rect x="-22" y="-16" width="44" height="32" rx="6" fill="#E8552E" stroke="#ffffff" stroke-width="4" />
+    <line x1="-22" y1="0" x2="22" y2="0" stroke="#ffffff" stroke-width="3" opacity="0.7" />
+    <line x1="0" y1="-16" x2="0" y2="0" stroke="#ffffff" stroke-width="3" opacity="0.7" />
+    <line x1="-11" y1="0" x2="-11" y2="16" stroke="#ffffff" stroke-width="3" opacity="0.7" />
+    <line x1="11" y1="0" x2="11" y2="16" stroke="#ffffff" stroke-width="3" opacity="0.7" />
+  </g>
+</svg>

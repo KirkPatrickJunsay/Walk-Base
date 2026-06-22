@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WalkBase.Views.BasePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
+    xmlns:vm="clr-namespace:WalkBase.ViewModels"
+    x:DataType="vm:BaseViewModel"
+    Title="Town"
+    BackgroundColor="{StaticResource WbBg}">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- HUD: Bricks + distance + daily step-goal progress (spec §12) -->
+        <Border Grid.Row="0" Style="{StaticResource WbCard}" Margin="12,10,12,6" Padding="14,10">
+            <VerticalStackLayout Spacing="8">
+
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10" VerticalOptions="Center">
+                    <!-- Bricks -->
+                    <Label Grid.Column="0" VerticalOptions="Center"
+                           Text="{Binding Bricks, StringFormat='🧱 {0:N0}'}" FontSize="22" FontAttributes="Bold"
+                           TextColor="{StaticResource WbAmber}" />
+                    <!-- Town name (centre) -->
+                    <Label Grid.Column="1" Text="{Binding TownName}" FontSize="13" FontAttributes="Bold"
+                           TextColor="{StaticResource WbText}" HorizontalOptions="Center" VerticalOptions="Center"
+                           LineBreakMode="TailTruncation" SemanticProperties.HeadingLevel="Level1" />
+                    <!-- Distance today -->
+                    <Label Grid.Column="2" Text="{Binding DistanceTodayText}" FontSize="20" FontAttributes="Bold"
+                           TextColor="{StaticResource WbGreen}" HorizontalOptions="End" VerticalOptions="Center" />
+                </Grid>
+
+                <!-- Daily goal progress -->
+                <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                    <Label Grid.Column="0" Text="{Binding GoalText}" FontSize="12" TextColor="{StaticResource WbTextDim}" VerticalOptions="Center" />
+                    <HorizontalStackLayout Grid.Column="1" Spacing="5" VerticalOptions="Center">
+                        <Border BackgroundColor="{StaticResource WbSurface2}" Stroke="Transparent" StrokeThickness="0"
+                                StrokeShape="RoundRectangle 9" Padding="7,2" VerticalOptions="Center">
+                            <Label FontSize="11" FontAttributes="Bold" TextColor="{StaticResource WbText}" Text="{Binding HappinessText}" />
+                        </Border>
+                        <Border BackgroundColor="{StaticResource WbSurface2}" Stroke="Transparent" StrokeThickness="0"
+                                StrokeShape="RoundRectangle 9" Padding="7,2" VerticalOptions="Center">
+                            <Label FontSize="11" FontAttributes="Bold" TextColor="{StaticResource WbGreen}" Text="{Binding Population, StringFormat='👥 {0}'}" />
+                        </Border>
+                        <Border IsVisible="{Binding HasStreak}" BackgroundColor="{StaticResource WbSurface2}" Stroke="Transparent" StrokeThickness="0"
+                                StrokeShape="RoundRectangle 9" Padding="7,2" VerticalOptions="Center">
+                            <Label Text="{Binding StreakBadge}" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource WbAmber}" />
+                        </Border>
+                    </HorizontalStackLayout>
+                </Grid>
+                <Border BackgroundColor="{StaticResource WbSurface2}" Stroke="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 5" HeightRequest="8" Padding="0">
+                    <ProgressBar Progress="{Binding GoalProgress}" ProgressColor="{StaticResource WbGreen}" HeightRequest="8" />
+                </Border>
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- Isometric base (pinch to zoom, drag to pan — handled in code-behind) -->
+        <skia:SKCanvasView x:Name="Canvas" Grid.Row="1" EnableTouchEvents="True"
+                           SemanticProperties.Description="Your town map. Double-tap a tile to build or manage a building." />
+
+        <!-- Goals button (bottom-left), with a badge when rewards are claimable -->
+        <Grid Grid.Row="1" HorizontalOptions="Start" VerticalOptions="End" Margin="14,0,0,14">
+            <Border BackgroundColor="{StaticResource WbSurface2}" Stroke="{StaticResource WbStroke}" StrokeThickness="1"
+                    StrokeShape="RoundRectangle 22" Padding="14,10"
+                    SemanticProperties.Description="Open goals and rewards">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenQuestsCommand}" />
+                </Border.GestureRecognizers>
+                <HorizontalStackLayout Spacing="6">
+                    <Label Text="🎯" FontSize="16" VerticalOptions="Center" />
+                    <Label Text="Goals" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource WbText}" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Border>
+            <Border IsVisible="{Binding HasClaimableQuests}" InputTransparent="True"
+                    BackgroundColor="{StaticResource WbAmber}" Stroke="{StaticResource WbBg}" StrokeThickness="2"
+                    StrokeShape="RoundRectangle 11" Padding="6,1"
+                    HorizontalOptions="End" VerticalOptions="Start" Margin="0,-8,-6,0">
+                <Label Text="{Binding QuestsBadge}" FontSize="11" FontAttributes="Bold" TextColor="#1A1A1A" />
+            </Border>
+        </Grid>
+
+        <!-- Share button (bottom-right): renders a town card and opens the system share sheet -->
+        <Border Grid.Row="1" HorizontalOptions="End" VerticalOptions="End" Margin="0,0,14,14"
+                BackgroundColor="{StaticResource WbSurface2}" Stroke="{StaticResource WbStroke}" StrokeThickness="1"
+                StrokeShape="RoundRectangle 22" Padding="14,10"
+                SemanticProperties.Description="Share an image of your town">
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding ShareTownCommand}" />
+            </Border.GestureRecognizers>
+            <HorizontalStackLayout Spacing="6">
+                <Label Text="📤" FontSize="16" VerticalOptions="Center" />
+                <Label Text="Share" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource WbText}" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+        </Border>
+
+        <!-- Permission / sensor fallback overlay (spec §7, §15) -->
+        <Border Grid.Row="1"
+                IsVisible="{Binding ShowSensorOverlay}"
+                BackgroundColor="#EE0E1320"
+                Stroke="Transparent" StrokeThickness="0"
+                Padding="28"
+                VerticalOptions="Center" HorizontalOptions="Center">
+            <VerticalStackLayout Spacing="14" MaximumWidthRequest="320">
+                <Label Text="👟" FontSize="44" HorizontalOptions="Center" />
+                <Label Text="{Binding OverlayTitle}"
+                       FontSize="19" FontAttributes="Bold" TextColor="{StaticResource WbText}" HorizontalTextAlignment="Center" />
+                <Label Text="Walk Track counts your steps with the on-device step sensor. It never uses location or the network."
+                       FontSize="14" TextColor="{StaticResource WbTextDim}" HorizontalTextAlignment="Center" />
+                <Button Text="Grant permission" Command="{Binding AppearingCommand}"
+                        Style="{StaticResource WbPrimaryButton}"
+                        IsVisible="{Binding SensorAvailable}" HorizontalOptions="Center" />
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- Themed tile-action popup (scrim + card) -->
+        <Grid x:Name="PopupScrim" Grid.RowSpan="2"
+              IsVisible="{Binding IsPopupVisible}"
+              BackgroundColor="#CC080C15">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding ClosePopupCommand}" />
+            </Grid.GestureRecognizers>
+
+            <Border x:Name="PopupCard" Style="{StaticResource WbCard}" Padding="20"
+                    Margin="28,0" MaximumWidthRequest="380"
+                    VerticalOptions="Center" HorizontalOptions="Fill">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding PopupNoopCommand}" />
+                </Border.GestureRecognizers>
+                <VerticalStackLayout Spacing="18">
+
+                    <HorizontalStackLayout Spacing="14">
+                        <!-- Building identity chip (mini iso icon) -->
+                        <Border WidthRequest="54" HeightRequest="54"
+                                IsVisible="{Binding PopupIsBuilding}"
+                                BackgroundColor="{StaticResource WbSurface2}"
+                                Stroke="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 14"
+                                Padding="4" VerticalOptions="Center">
+                            <Image Source="{Binding PopupIconImage}" Aspect="AspectFit" />
+                        </Border>
+                        <!-- Empty-plot placeholder (dashed outline — reads as a slot, not a button) -->
+                        <Border WidthRequest="54" HeightRequest="54"
+                                IsVisible="{Binding PopupIsEmptyPlot}"
+                                BackgroundColor="Transparent"
+                                Stroke="{StaticResource WbLock}" StrokeThickness="2"
+                                StrokeDashArray="5,4" StrokeDashOffset="0" StrokeShape="RoundRectangle 14"
+                                VerticalOptions="Center">
+                            <Label Text="+" FontSize="26" TextColor="{StaticResource WbTextDim}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Spacing="3" VerticalOptions="Center">
+                            <Label Text="{Binding PopupTitle}" FontSize="19" FontAttributes="Bold" TextColor="{StaticResource WbText}" />
+                            <Label Text="{Binding PopupSubtitle}" FontSize="13" TextColor="{StaticResource WbTextDim}" />
+                            <HorizontalStackLayout Spacing="5" IsVisible="{Binding PopupCostVisible}">
+                                <Label Text="🧱" FontSize="15" VerticalOptions="Center" />
+                                <Label Text="{Binding PopupCostText}" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource WbAmber}" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <Button Grid.Column="0" Text="Cancel"
+                                Command="{Binding ClosePopupCommand}"
+                                BackgroundColor="{StaticResource WbSurface2}" TextColor="{StaticResource WbText}"
+                                CornerRadius="12" Padding="18,10" MinimumHeightRequest="44" />
+                        <Button Grid.Column="1" Text="{Binding PopupPrimaryText}"
+                                Style="{StaticResource WbPrimaryButton}"
+                                IsEnabled="{Binding PopupPrimaryEnabled}"
+                                Command="{Binding PopupPrimaryCommand}" />
+                    </Grid>
+
+                    <!-- Move + Sell actions (only on the building popup) -->
+                    <Button Text="↔  Move to another tile"
+                            IsVisible="{Binding PopupCanMove}"
+                            Command="{Binding StartMoveCommand}"
+                            BackgroundColor="Transparent" TextColor="{StaticResource WbGreen}"
+                            BorderColor="{StaticResource WbGreen}" BorderWidth="1"
+                            CornerRadius="12" Padding="18,8" MinimumHeightRequest="42" FontSize="14" />
+                    <Button Text="{Binding PopupSellText}"
+                            IsVisible="{Binding PopupCanMove}"
+                            Command="{Binding SellCommand}"
+                            BackgroundColor="Transparent" TextColor="{StaticResource WbDanger}"
+                            BorderColor="{StaticResource WbDanger}" BorderWidth="1"
+                            CornerRadius="12" Padding="18,8" MinimumHeightRequest="42" FontSize="14" />
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <!-- Move-building mode banner -->
+        <Border Grid.Row="1" IsVisible="{Binding IsMoving}"
+                HorizontalOptions="Center" VerticalOptions="Start" Margin="12,14,12,0"
+                BackgroundColor="{StaticResource WbSurface}" Stroke="{StaticResource WbGreen}" StrokeThickness="1.5"
+                StrokeShape="RoundRectangle 22" Padding="14,10">
+            <HorizontalStackLayout Spacing="12">
+                <Label Text="{Binding MoveHint}" FontSize="14" FontAttributes="Bold"
+                       TextColor="{StaticResource WbText}" VerticalOptions="Center" />
+                <Button Text="Cancel" Command="{Binding CancelMoveCommand}"
+                        BackgroundColor="{StaticResource WbSurface2}" TextColor="{StaticResource WbText}"
+                        CornerRadius="10" Padding="12,4" MinimumHeightRequest="0" HeightRequest="34" FontSize="13" />
+            </HorizontalStackLayout>
+        </Border>
+
+        <!-- Goal-reached celebration (animated in from code-behind) -->
+        <Border x:Name="CelebrationView" Grid.RowSpan="2" IsVisible="False" Opacity="0" InputTransparent="True"
+                BackgroundColor="{StaticResource WbSurface}" Stroke="{StaticResource WbGreen}" StrokeThickness="1.5"
+                StrokeShape="RoundRectangle 18" Padding="26,20" Margin="36,0"
+                VerticalOptions="Center" HorizontalOptions="Center" MaximumWidthRequest="340">
+            <VerticalStackLayout Spacing="8">
+                <Label Text="🎉" FontSize="44" HorizontalOptions="Center" />
+                <Label Text="Daily goal reached!" FontSize="20" FontAttributes="Bold"
+                       TextColor="{StaticResource WbText}" HorizontalTextAlignment="Center" />
+                <Label Text="{Binding CelebrationText}" FontSize="15" TextColor="{StaticResource WbGreen}"
+                       HorizontalTextAlignment="Center" FontAttributes="Bold" />
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- First-run onboarding -->
+        <Grid Grid.RowSpan="2" IsVisible="{Binding ShowOnboarding}" BackgroundColor="#F20B1120">
+            <Border Style="{StaticResource WbCard}" Padding="24" Margin="24"
+                    VerticalOptions="Center" HorizontalOptions="Center" MaximumWidthRequest="380" MaximumHeightRequest="640">
+                <ScrollView>
+                <VerticalStackLayout Spacing="18">
+                    <Label Text="👟" FontSize="56" HorizontalOptions="Center" />
+                    <Label Text="Welcome to Walk Track" FontSize="23" FontAttributes="Bold"
+                           TextColor="{StaticResource WbText}" HorizontalTextAlignment="Center" />
+                    <Label Text="Turn your everyday steps into a cosy town that grows as you walk."
+                           FontSize="14" TextColor="{StaticResource WbTextDim}" HorizontalTextAlignment="Center" />
+
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding OnboardSlides}" Spacing="14" Margin="0,4">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:OnboardSlide">
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="13">
+                                    <Label Grid.Column="0" Text="{Binding Emoji}" FontSize="26" VerticalOptions="Start" />
+                                    <VerticalStackLayout Grid.Column="1" Spacing="1">
+                                        <Label Text="{Binding Title}" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource WbText}" />
+                                        <Label Text="{Binding Body}" FontSize="13" TextColor="{StaticResource WbTextDim}" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+
+                    <Button Text="Enable step tracking" Command="{Binding CompleteOnboardingCommand}"
+                            Style="{StaticResource WbPrimaryButton}" Margin="0,4,0,0" />
+                </VerticalStackLayout>
+                </ScrollView>
+            </Border>
+        </Grid>
+    </Grid>
+</ContentPage>

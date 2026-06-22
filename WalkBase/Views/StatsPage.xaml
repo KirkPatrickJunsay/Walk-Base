@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WalkBase.Views.StatsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:WalkBase.ViewModels"
+    x:DataType="vm:StatsViewModel"
+    Title="Stats"
+    BackgroundColor="{StaticResource WbBg}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="12" Spacing="12">
+
+            <!-- Hero: lifetime distance -->
+            <Border Style="{StaticResource WbCard}" Padding="20">
+                <Grid ColumnDefinitions="Auto,*">
+                    <Label Grid.Column="0" Text="🏆" FontSize="40" VerticalOptions="Center" Margin="0,0,16,0" />
+                    <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                        <Label Text="DISTANCE WALKED" Style="{StaticResource WbSection}" />
+                        <Label Text="{Binding DistanceText}" FontSize="34" FontAttributes="Bold" TextColor="{StaticResource WbGreen}" />
+                        <Label Text="{Binding LifetimeSteps, StringFormat='{0:N0} lifetime steps'}" FontSize="13" TextColor="{StaticResource WbTextDim}" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <!-- Calories (lifetime estimate; "—" until height/weight set in Settings) -->
+            <Border Style="{StaticResource WbCard}">
+                <Grid ColumnDefinitions="Auto,*,Auto">
+                    <Label Grid.Column="0" Text="🔥" FontSize="24" VerticalOptions="Center" Margin="0,0,12,0" />
+                    <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                        <Label Text="Calories burned (lifetime, est.)" FontSize="13" TextColor="{StaticResource WbTextDim}" />
+                        <Label Text="{Binding CaloriesText, StringFormat='{0} kcal'}" Style="{StaticResource WbStatValue}" TextColor="{StaticResource WbAmber}" />
+                    </VerticalStackLayout>
+                    <Label Grid.Column="2" Text="Set metrics ›" IsVisible="{Binding NeedsMetrics}"
+                           FontSize="12" TextColor="{StaticResource WbTextDim}" VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenSettingsCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+            </Border>
+
+            <Label Text="BRICKS" Style="{StaticResource WbSection}" Margin="4,4,0,0" />
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12" RowDefinitions="Auto,Auto" RowSpacing="12">
+                <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource WbCard}">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="⛏️ Earned" FontSize="13" TextColor="{StaticResource WbTextDim}" />
+                        <Label Text="{Binding BricksEarned, StringFormat='{0:N0}'}" Style="{StaticResource WbStatValue}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource WbCard}">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="🛠️ Spent" FontSize="13" TextColor="{StaticResource WbTextDim}" />
+                        <Label Text="{Binding BricksSpent, StringFormat='{0:N0}'}" Style="{StaticResource WbStatValue}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource WbCard}">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Label Grid.Column="0" Text="🧱" FontSize="24" VerticalOptions="Center" Margin="0,0,12,0" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                            <Label Text="Current balance" FontSize="13" TextColor="{StaticResource WbTextDim}" />
+                            <Label Text="{Binding BricksBalance, StringFormat='{0:N0}'}" Style="{StaticResource WbStatValue}" TextColor="{StaticResource WbAmber}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Label Text="BASE" Style="{StaticResource WbSection}" Margin="4,4,0,0" />
+            <Border Style="{StaticResource WbCard}">
+                <Grid ColumnDefinitions="Auto,*">
+                    <Label Grid.Column="0" Text="🏠" FontSize="24" VerticalOptions="Center" Margin="0,0,12,0" />
+                    <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                        <Label Text="Buildings placed" FontSize="13" TextColor="{StaticResource WbTextDim}" />
+                        <Label Text="{Binding BuildingCount}" Style="{StaticResource WbStatValue}" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <Border BackgroundColor="{StaticResource WbSurface}" Stroke="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="12" Margin="0,8,0,0">
+                <Label Text="🔒 All data stays on this device. No account, no network, no location."
+                       FontSize="12" TextColor="{StaticResource WbTextDim}" HorizontalTextAlignment="Center" />
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

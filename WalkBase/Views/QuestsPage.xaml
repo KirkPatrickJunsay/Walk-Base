@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WalkBase.Views.QuestsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:WalkBase.ViewModels"
+    x:Name="Page"
+    x:DataType="vm:QuestsViewModel"
+    Title="Goals"
+    BackgroundColor="{StaticResource WbBg}">
+
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Padding="12" Spacing="12">
+
+                <!-- Header -->
+                <Border Style="{StaticResource WbCard}" Padding="18,16">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="🎯 GOALS" Style="{StaticResource WbSection}" />
+                        <Label Text="Reach milestones by walking and growing your town to earn bonus Bricks."
+                               FontSize="13" TextColor="{StaticResource WbTextDim}" />
+                        <Label Text="{Binding Summary}" FontSize="14" FontAttributes="Bold"
+                               TextColor="{StaticResource WbGreen}" Margin="0,6,0,0" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Quest list -->
+                <CollectionView ItemsSource="{Binding Quests}" SelectionMode="None">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="vm:QuestRow">
+                            <Border Style="{StaticResource WbCard}" Padding="16" Opacity="{Binding RowOpacity}">
+                                <VerticalStackLayout Spacing="10">
+                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                        <Label Grid.Column="0" Text="{Binding Emoji}" FontSize="26" VerticalOptions="Center" />
+                                        <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                                            <Label Text="{Binding Title}" FontSize="17" FontAttributes="Bold" TextColor="{StaticResource WbText}" />
+                                            <Label Text="{Binding Description}" FontSize="13" TextColor="{StaticResource WbTextDim}" />
+                                        </VerticalStackLayout>
+                                        <VerticalStackLayout Grid.Column="2" Spacing="0" HorizontalOptions="End" VerticalOptions="Center">
+                                            <Label Text="{Binding RewardText}" FontSize="15" FontAttributes="Bold"
+                                                   TextColor="{StaticResource WbAmber}" HorizontalOptions="End" />
+                                            <Label Text="REWARD" Style="{StaticResource WbSection}" FontSize="9" HorizontalOptions="End" />
+                                        </VerticalStackLayout>
+                                    </Grid>
+
+                                    <!-- Progress -->
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10" IsVisible="{Binding InProgress}">
+                                        <Border Grid.Column="0" BackgroundColor="{StaticResource WbSurface2}" Stroke="Transparent"
+                                                StrokeThickness="0" StrokeShape="RoundRectangle 5" HeightRequest="9" Padding="0" VerticalOptions="Center">
+                                            <ProgressBar Progress="{Binding Fraction}" ProgressColor="{StaticResource WbGreen}" HeightRequest="9" />
+                                        </Border>
+                                        <Label Grid.Column="1" Text="{Binding ProgressText}" FontSize="12"
+                                               TextColor="{StaticResource WbTextDim}" VerticalOptions="Center" />
+                                    </Grid>
+
+                                    <!-- Claim button (only when complete + unclaimed) -->
+                                    <Button Text="🎁  Claim reward" IsVisible="{Binding IsClaimable}"
+                                            Command="{Binding Source={x:Reference Page}, Path=BindingContext.ClaimCommand}"
+                                            CommandParameter="{Binding .}"
+                                            Style="{StaticResource WbPrimaryButton}" />
+
+                                    <Label Text="✓ Claimed" IsVisible="{Binding IsClaimed}" FontSize="13" FontAttributes="Bold"
+                                           TextColor="{StaticResource WbGreen}" HorizontalOptions="Start" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Toast -->
+        <Border x:Name="Toast" IsVisible="False" Opacity="0" InputTransparent="True"
+                BackgroundColor="{StaticResource WbSurface}" Stroke="{StaticResource WbGreen}" StrokeThickness="1.5"
+                StrokeShape="RoundRectangle 14" Padding="18,12" Margin="24"
+                VerticalOptions="End" HorizontalOptions="Center">
+            <Label Text="{Binding ToastMessage}" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource WbText}" />
+        </Border>
+    </Grid>
+</ContentPage>

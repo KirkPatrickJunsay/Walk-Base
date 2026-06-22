@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WalkBase.Views.BuildPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:WalkBase.ViewModels"
+    x:DataType="vm:BuildViewModel"
+    Title="Build"
+    BackgroundColor="{StaticResource WbBg}">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Balance header -->
+        <Border Grid.Row="0" Style="{StaticResource WbCard}" Margin="12,12,12,6" Padding="14">
+            <Grid ColumnDefinitions="Auto,*">
+                <HorizontalStackLayout Grid.Column="0" Spacing="8" VerticalOptions="Center">
+                    <Label Text="🧱" FontSize="22" VerticalOptions="Center" />
+                    <VerticalStackLayout Spacing="0">
+                        <Label Text="{Binding Bricks, StringFormat='{0:N0}'}" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource WbAmber}" />
+                        <Label Text="BRICKS AVAILABLE" Style="{StaticResource WbSection}" FontSize="10" />
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+                <Label Grid.Column="1" Text="{Binding PlotText}" FontSize="12" TextColor="{StaticResource WbTextDim}"
+                       HorizontalOptions="End" VerticalOptions="Center" />
+            </Grid>
+        </Border>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Options}" Margin="12,2,12,12">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:BuildingOption">
+                    <Border Style="{StaticResource WbCard}" Margin="0,6" Padding="12" Opacity="{Binding RowOpacity}">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+
+                            <!-- Mini iso building icon -->
+                            <Border Grid.Column="0" WidthRequest="52" HeightRequest="52"
+                                    BackgroundColor="{StaticResource WbSurface2}" Stroke="Transparent" StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 12" Padding="3" VerticalOptions="Center">
+                                <Image Source="{Binding IconImage}" Aspect="AspectFit" />
+                            </Border>
+
+                            <!-- Name + tier + state -->
+                            <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label Text="{Binding Name}" FontSize="17" FontAttributes="Bold" TextColor="{StaticResource WbText}" />
+                                    <Border BackgroundColor="{StaticResource WbSurface2}" Stroke="Transparent" StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 6" Padding="6,2" VerticalOptions="Center">
+                                        <Label Text="{Binding TierBadge}" FontSize="9" FontAttributes="Bold" TextColor="{StaticResource WbTextDim}" />
+                                    </Border>
+                                </HorizontalStackLayout>
+                                <Label Text="{Binding Subtitle}" FontSize="12" TextColor="{StaticResource WbTextDim}" />
+                                <HorizontalStackLayout Spacing="4">
+                                    <Label Text="🧱" FontSize="13" VerticalOptions="Center" />
+                                    <Label Text="{Binding CostText}" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource WbAmber}" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+
+                            <!-- Build button -->
+                            <Button Grid.Column="2"
+                                    Text="{Binding BuyText}"
+                                    Style="{StaticResource WbPrimaryButton}"
+                                    IsEnabled="{Binding CanBuy}"
+                                    VerticalOptions="Center"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:BuildViewModel}}, Path=BuyCommand}"
+                                    CommandParameter="{Binding .}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Themed auto-dismissing toast (replaces native alerts) -->
+        <Border x:Name="Toast" Grid.RowSpan="2" IsVisible="False" Opacity="0"
+                BackgroundColor="{StaticResource WbSurface2}"
+                Stroke="{StaticResource WbStroke}" StrokeThickness="1" StrokeShape="RoundRectangle 14"
+                Padding="16,13" Margin="20,0,20,22"
+                VerticalOptions="End" HorizontalOptions="Fill">
+            <Label Text="{Binding ToastMessage}" FontSize="14" FontAttributes="Bold"
+                   TextColor="{StaticResource WbText}" HorizontalTextAlignment="Center" />
+        </Border>
+    </Grid>
+</ContentPage>

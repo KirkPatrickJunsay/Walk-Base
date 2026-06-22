@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+    <!-- PlayerState/PlacedBuilding carry sqlite-net attributes. -->
+    <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <!--
+    Link the *pure* (no-MAUI) WalkBase logic so it can be unit-tested on plain net10.0.
+    Platform/MAUI-bound code (GameDataService, StepSensor, ViewModels, rendering) is
+    intentionally excluded; tests drive StepService with fakes.
+  -->
+  <ItemGroup>
+    <Compile Include="..\WalkBase\Models\PlayerState.cs" Link="Linked\PlayerState.cs" />
+    <Compile Include="..\WalkBase\Models\PlacedBuilding.cs" Link="Linked\PlacedBuilding.cs" />
+    <Compile Include="..\WalkBase\Models\DailyStepRecord.cs" Link="Linked\DailyStepRecord.cs" />
+    <Compile Include="..\WalkBase\Models\Building.cs" Link="Linked\Building.cs" />
+    <Compile Include="..\WalkBase\Services\ICurrencyService.cs" Link="Linked\ICurrencyService.cs" />
+    <Compile Include="..\WalkBase\Services\CurrencyService.cs" Link="Linked\CurrencyService.cs" />
+    <Compile Include="..\WalkBase\Services\IStepSensor.cs" Link="Linked\IStepSensor.cs" />
+    <Compile Include="..\WalkBase\Services\IStepService.cs" Link="Linked\IStepService.cs" />
+    <Compile Include="..\WalkBase\Services\StepService.cs" Link="Linked\StepService.cs" />
+    <Compile Include="..\WalkBase\Services\StepReconciler.cs" Link="Linked\StepReconciler.cs" />
+    <Compile Include="..\WalkBase\Services\IGameDataService.cs" Link="Linked\IGameDataService.cs" />
+    <Compile Include="..\WalkBase\Services\BuildingCatalog.cs" Link="Linked\BuildingCatalog.cs" />
+    <Compile Include="..\WalkBase\Services\StreakCalculator.cs" Link="Linked\StreakCalculator.cs" />
+    <Compile Include="..\WalkBase\Services\BaseExpansion.cs" Link="Linked\BaseExpansion.cs" />
+    <Compile Include="..\WalkBase\Models\Quest.cs" Link="Linked\Quest.cs" />
+    <Compile Include="..\WalkBase\Services\QuestCatalog.cs" Link="Linked\QuestCatalog.cs" />
+    <Compile Include="..\WalkBase\Services\QuestEvaluator.cs" Link="Linked\QuestEvaluator.cs" />
+    <Compile Include="..\WalkBase\Services\HappinessCalculator.cs" Link="Linked\HappinessCalculator.cs" />
+    <Compile Include="..\WalkBase\Models\BackupData.cs" Link="Linked\BackupData.cs" />
+    <Compile Include="..\WalkBase\Services\BackupSerializer.cs" Link="Linked\BackupSerializer.cs" />
+    <Compile Include="..\WalkBase\Services\NotificationPlanner.cs" Link="Linked\NotificationPlanner.cs" />
+    <Compile Include="..\WalkBase\Models\Badge.cs" Link="Linked\Badge.cs" />
+    <Compile Include="..\WalkBase\Services\BadgeCatalog.cs" Link="Linked\BadgeCatalog.cs" />
+    <Compile Include="..\WalkBase\Services\BadgeEvaluator.cs" Link="Linked\BadgeEvaluator.cs" />
+  </ItemGroup>
+
+</Project>

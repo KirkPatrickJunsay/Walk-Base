@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark navy so the status bar / nav bar blend with the app theme. -->
+    <color name="colorPrimary">#131B2A</color>
+    <color name="colorPrimaryDark">#0E1320</color>
+    <color name="colorAccent">#F2C84B</color>
+</resources>

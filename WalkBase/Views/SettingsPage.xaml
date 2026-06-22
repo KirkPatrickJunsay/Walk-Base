@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WalkBase.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:WalkBase.ViewModels"
+    x:DataType="vm:SettingsViewModel"
+    Title="Settings"
+    BackgroundColor="{StaticResource WbBg}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="12" Spacing="12">
+
+            <Label Text="TOWN" Style="{StaticResource WbSection}" Margin="4,4,0,0" />
+            <Border Style="{StaticResource WbCard}">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Town name" FontSize="13" TextColor="{StaticResource WbTextDim}" />
+                    <Border BackgroundColor="{StaticResource WbSurface2}" Stroke="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 10" Padding="12,2">
+                        <Entry Text="{Binding TownName}" Placeholder="My Town" MaxLength="24"
+                               FontSize="18" TextColor="{StaticResource WbText}" PlaceholderColor="{StaticResource WbTextDim}" />
+                    </Border>
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="ABOUT YOU" Style="{StaticResource WbSection}" Margin="4,4,0,0" />
+            <Border Style="{StaticResource WbCard}">
+                <VerticalStackLayout Spacing="14">
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="14">
+                        <VerticalStackLayout Grid.Column="0" Spacing="4">
+                            <Label Text="Height (cm)" FontSize="13" TextColor="{StaticResource WbTextDim}" />
+                            <Border BackgroundColor="{StaticResource WbSurface2}" Stroke="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 10" Padding="12,2">
+                                <Entry Text="{Binding HeightText}" Keyboard="Numeric" Placeholder="175"
+                                       FontSize="18" TextColor="{StaticResource WbText}" PlaceholderColor="{StaticResource WbTextDim}" />
+                            </Border>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                            <Label Text="Weight (kg)" FontSize="13" TextColor="{StaticResource WbTextDim}" />
+                            <Border BackgroundColor="{StaticResource WbSurface2}" Stroke="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 10" Padding="12,2">
+                                <Entry Text="{Binding WeightText}" Keyboard="Numeric" Placeholder="70"
+                                       FontSize="18" TextColor="{StaticResource WbText}" PlaceholderColor="{StaticResource WbTextDim}" />
+                            </Border>
+                        </VerticalStackLayout>
+                    </Grid>
+                    <Label Text="{Binding MetricsPreview}" FontSize="12" TextColor="{StaticResource WbTextDim}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="DAILY GOAL" Style="{StaticResource WbSection}" Margin="4,8,0,0" />
+            <Border Style="{StaticResource WbCard}">
+                <VerticalStackLayout Spacing="12">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Label Grid.Column="0" Text="🎯" FontSize="24" VerticalOptions="Center" Margin="0,0,12,0" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                            <Label Text="Step goal" FontSize="13" TextColor="{StaticResource WbTextDim}" />
+                            <Label Text="{Binding GoalDisplay}" Style="{StaticResource WbStatValue}" TextColor="{StaticResource WbGreen}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                    <Slider Minimum="2000" Maximum="20000"
+                            Value="{Binding DailyGoal, Mode=TwoWay}"
+                            MinimumTrackColor="{StaticResource WbGreen}"
+                            MaximumTrackColor="{StaticResource WbSurface2}"
+                            ThumbColor="{StaticResource WbAmber}" Margin="0,2" />
+                    <Grid ColumnDefinitions="*,*">
+                        <Label Grid.Column="0" Text="2,000" FontSize="11" TextColor="{StaticResource WbTextDim}" />
+                        <Label Grid.Column="1" Text="20,000" FontSize="11" TextColor="{StaticResource WbTextDim}" HorizontalOptions="End" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="TRACKING" Style="{StaticResource WbSection}" Margin="4,8,0,0" IsVisible="{Binding BackgroundSupported}" />
+            <Border Style="{StaticResource WbCard}" IsVisible="{Binding BackgroundSupported}">
+                <VerticalStackLayout Spacing="14">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                        <Label Grid.Column="0" Text="🛰️" FontSize="24" VerticalOptions="Center" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                            <Label Text="Background tracking" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource WbText}" />
+                            <Label Text="Keep counting steps when the app is closed" FontSize="12" TextColor="{StaticResource WbTextDim}" />
+                        </VerticalStackLayout>
+                        <Switch Grid.Column="2" IsToggled="{Binding BackgroundTracking, Mode=TwoWay}"
+                                OnColor="{StaticResource WbGreen}" ThumbColor="{StaticResource WbText}" VerticalOptions="Center" />
+                    </Grid>
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                        <Label Grid.Column="0" Text="🔔" FontSize="24" VerticalOptions="Center" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                            <Label Text="Daily reminders" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource WbText}" />
+                            <Label Text="Near-goal, streak-at-risk, go-for-a-walk and goal-reached nudges (needs background tracking on)" FontSize="12" TextColor="{StaticResource WbTextDim}" />
+                        </VerticalStackLayout>
+                        <Switch Grid.Column="2" IsToggled="{Binding RemindersEnabled, Mode=TwoWay}" IsEnabled="{Binding BackgroundTracking}"
+                                OnColor="{StaticResource WbGreen}" ThumbColor="{StaticResource WbText}" VerticalOptions="Center" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Feedback -->
+            <Label Text="FEEDBACK" Style="{StaticResource WbSection}" Margin="4,8,0,0" />
+            <Border Style="{StaticResource WbCard}">
+                <VerticalStackLayout Spacing="14">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                        <Label Grid.Column="0" Text="🔊" FontSize="24" VerticalOptions="Center" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                            <Label Text="Sound effects" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource WbText}" />
+                            <Label Text="Play a sound on build, claim and goal" FontSize="12" TextColor="{StaticResource WbTextDim}" />
+                        </VerticalStackLayout>
+                        <Switch Grid.Column="2" IsToggled="{Binding SoundEnabled, Mode=TwoWay}"
+                                OnColor="{StaticResource WbGreen}" ThumbColor="{StaticResource WbText}" VerticalOptions="Center" />
+                    </Grid>
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                        <Label Grid.Column="0" Text="📳" FontSize="24" VerticalOptions="Center" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                            <Label Text="Haptics" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource WbText}" />
+                            <Label Text="Vibrate on actions" FontSize="12" TextColor="{StaticResource WbTextDim}" />
+                        </VerticalStackLayout>
+                        <Switch Grid.Column="2" IsToggled="{Binding HapticsEnabled, Mode=TwoWay}"
+                                OnColor="{StaticResource WbGreen}" ThumbColor="{StaticResource WbText}" VerticalOptions="Center" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Accessibility -->
+            <Label Text="ACCESSIBILITY" Style="{StaticResource WbSection}" Margin="4,8,0,0" />
+            <Border Style="{StaticResource WbCard}">
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                    <Label Grid.Column="0" Text="🌀" FontSize="24" VerticalOptions="Center" />
+                    <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                        <Label Text="Reduce motion" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource WbText}" />
+                        <Label Text="Keep the town still — no walking, weather or particles" FontSize="12" TextColor="{StaticResource WbTextDim}" />
+                    </VerticalStackLayout>
+                    <Switch Grid.Column="2" IsToggled="{Binding ReduceMotion, Mode=TwoWay}"
+                            OnColor="{StaticResource WbGreen}" ThumbColor="{StaticResource WbText}" VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <!-- Data backup -->
+            <Label Text="DATA" Style="{StaticResource WbSection}" Margin="4,8,0,0" />
+            <Border Style="{StaticResource WbCard}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Your town lives only on this device. Export a backup file you can keep safe, and restore it on a new phone."
+                           FontSize="13" TextColor="{StaticResource WbTextDim}" />
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <Button Grid.Column="0" Text="⬆️ Export" Command="{Binding ExportDataCommand}"
+                                BackgroundColor="{StaticResource WbSurface2}" TextColor="{StaticResource WbText}"
+                                CornerRadius="12" Padding="14,10" MinimumHeightRequest="44" />
+                        <Button Grid.Column="1" Text="⬇️ Restore" Clicked="OnRestoreClicked"
+                                BackgroundColor="{StaticResource WbSurface2}" TextColor="{StaticResource WbText}"
+                                CornerRadius="12" Padding="14,10" MinimumHeightRequest="44" />
+                    </Grid>
+                    <Label Text="{Binding DataStatus}" IsVisible="{Binding HasDataStatus}"
+                           FontSize="12" TextColor="{StaticResource WbGreen}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- About / privacy -->
+            <Label Text="ABOUT" Style="{StaticResource WbSection}" Margin="4,8,0,0" />
+            <Border Style="{StaticResource WbCard}">
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                    <Label Grid.Column="0" Text="🔒" FontSize="24" VerticalOptions="Center" />
+                    <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                        <Label Text="Privacy" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource WbText}" />
+                        <Label Text="No account, no cloud, no tracking" FontSize="12" TextColor="{StaticResource WbTextDim}" />
+                    </VerticalStackLayout>
+                    <Label Grid.Column="2" Text="›" FontSize="22" TextColor="{StaticResource WbTextDim}" VerticalOptions="Center" />
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenPrivacyCommand}" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+            </Border>
+
+            <Border Style="{StaticResource WbCard}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="❤️ Health &amp; safety" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource WbText}" />
+                    <Label FontSize="12" TextColor="{StaticResource WbTextDim}"
+                           Text="Walk Track is a fun step-tracking game, not a medical, fitness or health-advice tool. Step counts, distance and calories are estimates from your phone's sensor and may be inaccurate. The app can't diagnose, treat or prevent any condition. Decisions about your activity are your own responsibility — consider talking to a qualified healthcare professional before starting or changing an exercise routine, and stay aware of your surroundings while you walk." />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource WbCard}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="🎨 Credits" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource WbText}" />
+                    <Label FontSize="12" TextColor="{StaticResource WbTextDim}"
+                           Text="Building artwork adapted from the “Sketch Town” pack by Kenney (kenney.nl), used under the Creative Commons Zero (CC0) licence. Thank you, Kenney!" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="Walk Track v1.0"
+                   FontSize="12" TextColor="{StaticResource WbTextDim}" HorizontalTextAlignment="Center" Margin="8,8,8,12" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

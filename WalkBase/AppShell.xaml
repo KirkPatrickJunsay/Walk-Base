@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="WalkBase.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:WalkBase.Views"
+    Title="WalkBase"
+    Shell.BackgroundColor="{StaticResource WbBgElevated}"
+    Shell.ForegroundColor="{StaticResource WbAmber}"
+    Shell.TitleColor="{StaticResource WbText}"
+    Shell.TabBarBackgroundColor="{StaticResource WbBgElevated}"
+    Shell.TabBarForegroundColor="{StaticResource WbAmber}"
+    Shell.TabBarTitleColor="{StaticResource WbAmber}"
+    Shell.TabBarUnselectedColor="{StaticResource WbTextDim}">
+
+    <TabBar>
+        <ShellContent
+            Title="Town"
+            Icon="tab_base.png"
+            ContentTemplate="{DataTemplate views:BasePage}"
+            Route="BasePage" />
+
+        <ShellContent
+            Title="Build"
+            Icon="tab_build.png"
+            ContentTemplate="{DataTemplate views:BuildPage}"
+            Route="BuildPage" />
+
+        <ShellContent
+            Title="History"
+            Icon="tab_history.png"
+            ContentTemplate="{DataTemplate views:HistoryPage}"
+            Route="HistoryPage" />
+
+        <ShellContent
+            Title="Insights"
+            Icon="tab_insights.png"
+            ContentTemplate="{DataTemplate views:InsightsPage}"
+            Route="InsightsPage" />
+
+        <ShellContent
+            Title="More"
+            Icon="tab_more.png"
+            ContentTemplate="{DataTemplate views:SettingsPage}"
+            Route="SettingsPage" />
+    </TabBar>
+
+</Shell>
