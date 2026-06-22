@@ -20,3 +20,14 @@ Notes:
 - The feature graphic is composed (text + layout) around the app's S25-rendered town/stats card and the icon.
 - Recommended listing order: town hook → tracking proof → build → goals → privacy, matching the
   Health & Fitness positioning (a charming, private step tracker).
+
+## Foreground service declaration video
+
+`foreground_service_demo.mp4` — a 25s video for **Play Console → App content → Foreground service
+permissions** (the `FOREGROUND_SERVICE_HEALTH` declaration "Video link" field). It demonstrates:
+the step-tracking feature → the "Background tracking" setting (keeps counting when the app is closed)
+→ the ongoing foreground-service notification shown on the home screen with the app closed → tracked
+steps/distance/calories over time. Composed from real Galaxy S25 Ultra screenshots with captions.
+
+**To use it:** upload to YouTube as **Unlisted** (or Google Drive with link sharing) and paste that
+URL into the "Video link" field. Play needs a hosted URL, not a file upload.
