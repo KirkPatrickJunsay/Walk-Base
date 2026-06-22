@@ -46,10 +46,14 @@ Upload that to the Play Console. (Recommended: enroll in Play App Signing.)
 
 ## 3. Privacy policy URL (required)
 
-Play requires a publicly reachable privacy-policy URL. Host [`PRIVACY_POLICY.md`](PRIVACY_POLICY.md)
-somewhere stable (GitHub Pages, a gist's "raw" URL, or any static host) and paste that
-URL into **Play Console → App content → Privacy policy** *and* the store listing.
-The same text is also shown in-app at *Settings → About → Privacy* (no network needed).
+Play requires a publicly reachable privacy-policy URL. It is **already hosted** via GitHub Pages:
+
+> **https://kirkpatrickjunsay.github.io/Walk-Base/privacy.html**
+
+Paste that URL into **Play Console → App content → Privacy policy** *and* the store listing.
+The page source is [`docs/privacy.html`](../docs/privacy.html) (edit + push to update it; the markdown
+copy is [`PRIVACY_POLICY.md`](PRIVACY_POLICY.md)). The same text is also shown in-app at
+*Settings → About → Privacy* (no network needed).
 
 ## 4. Data safety form (Play Console → App content → Data safety)
 
