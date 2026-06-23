@@ -34,7 +34,13 @@ public static class StepReconciler
         {
             delta = current - state.StepBaselineOffset;
             if (delta < 0)
-                delta = current;                  // §7.2 reboot → counter reset
+                delta = 0;                        // §7.2 counter went backwards (reboot / reset /
+                                                  // glitch). Re-baseline, but DO NOT credit the
+                                                  // whole `current` reading — that is the device's
+                                                  // entire since-boot count and would dump thousands
+                                                  // of (often phantom) steps into today. A fitness
+                                                  // tracker must never over-count; we forgo the small
+                                                  // gap since the reset instead of inflating the total.
             state.LifetimeSteps += delta;
             state.StepBaselineOffset = current;
             dirty = true;

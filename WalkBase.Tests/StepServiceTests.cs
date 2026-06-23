@@ -36,19 +36,52 @@ public class StepServiceTests
     }
 
     [Fact]
-    public async Task Reboot_CounterReset_CreditsCurrentAsDelta() // spec §7.2
+    public async Task Reboot_CounterReset_ReBaselines_WithoutDumpingALump() // spec §7.2
     {
         var data = new FakeGameData();
-        // 5000 (seed) → 5300 (+300) → 80 (reboot: current < baseline → credit 80)
+        // 5000 (seed) → 5300 (+300) → 80 (counter went backwards: reboot/reset/glitch)
         var svc = Build(new FakeStepSensor(5000, 5300, 80), data);
 
         await svc.SyncAsync();
         await svc.SyncAsync();
         var afterReboot = await svc.SyncAsync();
 
-        Assert.Equal(80, afterReboot.DeltaApplied);
-        Assert.Equal(380, afterReboot.LifetimeSteps); // 300 + 80
-        Assert.Equal(80, data.State.StepBaselineOffset);
+        // A backwards reading must NOT credit its value — and must never dump the device's
+        // whole since-boot count. We re-baseline and credit nothing for this tick.
+        Assert.Equal(0, afterReboot.DeltaApplied);
+        Assert.Equal(300, afterReboot.LifetimeSteps);     // unchanged from before the reset
+        Assert.Equal(80, data.State.StepBaselineOffset);  // re-baselined to the new counter
+    }
+
+    [Fact]
+    public async Task AfterCounterReset_NewSteps_CountNormally()
+    {
+        var data = new FakeGameData();
+        // seed 5000 → +300 → reset to 80 (credits 0, baseline=80) → 220 (+140 from new baseline)
+        var svc = Build(new FakeStepSensor(5000, 5300, 80, 220), data);
+
+        await svc.SyncAsync(); // seed
+        await svc.SyncAsync(); // +300
+        await svc.SyncAsync(); // reset → +0
+        var result = await svc.SyncAsync(); // 220 - 80 = +140
+
+        Assert.Equal(140, result.DeltaApplied);
+        Assert.Equal(440, result.LifetimeSteps); // 300 + 0 + 140 (not 300 + 80 + 140)
+    }
+
+    [Fact]
+    public async Task BackwardsReading_DoesNotInflate_TodaysSteps()
+    {
+        var data = new FakeGameData();
+        // A large since-boot value must never be dumped into StepsToday on a reset.
+        var svc = Build(new FakeStepSensor(50000, 50300, 16000), data);
+
+        await svc.SyncAsync(); // seed at 50000
+        await svc.SyncAsync(); // +300 today
+        var afterReset = await svc.SyncAsync(); // 16000 < 50300 → reset → credit 0
+
+        Assert.Equal(0, afterReset.DeltaApplied);
+        Assert.Equal(300, afterReset.StepsToday); // still 300, NOT 300 + 16000
     }
 
     [Fact]
